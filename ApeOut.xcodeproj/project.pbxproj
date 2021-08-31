@@ -15,6 +15,9 @@
 		858788BE26DDF60D00B8DF76 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 858788BD26DDF60D00B8DF76 /* Assets.xcassets */; };
 		858788C826DDF8DB00B8DF76 /* hitBuilding.sks in Resources */ = {isa = PBXBuildFile; fileRef = 858788C626DDF8DB00B8DF76 /* hitBuilding.sks */; };
 		858788C926DDF8DB00B8DF76 /* hitPlayer.sks in Resources */ = {isa = PBXBuildFile; fileRef = 858788C726DDF8DB00B8DF76 /* hitPlayer.sks */; };
+		858788CB26DDFFCF00B8DF76 /* BuildingNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858788CA26DDFFCF00B8DF76 /* BuildingNode.swift */; };
+		858788CD26DE002D00B8DF76 /* CollisionTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858788CC26DE002D00B8DF76 /* CollisionTypes.swift */; };
+		858788CF26DE07CB00B8DF76 /* ApeOutGameColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858788CE26DE07CB00B8DF76 /* ApeOutGameColors.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +31,9 @@
 		858788BF26DDF60D00B8DF76 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		858788C626DDF8DB00B8DF76 /* hitBuilding.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = hitBuilding.sks; sourceTree = "<group>"; };
 		858788C726DDF8DB00B8DF76 /* hitPlayer.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = hitPlayer.sks; sourceTree = "<group>"; };
+		858788CA26DDFFCF00B8DF76 /* BuildingNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildingNode.swift; sourceTree = "<group>"; };
+		858788CC26DE002D00B8DF76 /* CollisionTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollisionTypes.swift; sourceTree = "<group>"; };
+		858788CE26DE07CB00B8DF76 /* ApeOutGameColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApeOutGameColors.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,10 +70,13 @@
 				858788B026DDF60700B8DF76 /* AppDelegate.swift */,
 				858788B226DDF60700B8DF76 /* GameScene.sks */,
 				858788B626DDF60700B8DF76 /* GameScene.swift */,
+				858788CA26DDFFCF00B8DF76 /* BuildingNode.swift */,
+				858788CC26DE002D00B8DF76 /* CollisionTypes.swift */,
 				858788B826DDF60700B8DF76 /* GameViewController.swift */,
 				858788BA26DDF60700B8DF76 /* Main.storyboard */,
 				858788BD26DDF60D00B8DF76 /* Assets.xcassets */,
 				858788BF26DDF60D00B8DF76 /* Info.plist */,
+				858788CE26DE07CB00B8DF76 /* ApeOutGameColors.swift */,
 			);
 			path = ApeOut;
 			sourceTree = "<group>";
@@ -154,7 +163,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				858788B726DDF60700B8DF76 /* GameScene.swift in Sources */,
+				858788CF26DE07CB00B8DF76 /* ApeOutGameColors.swift in Sources */,
+				858788CB26DDFFCF00B8DF76 /* BuildingNode.swift in Sources */,
 				858788B926DDF60700B8DF76 /* GameViewController.swift in Sources */,
+				858788CD26DE002D00B8DF76 /* CollisionTypes.swift in Sources */,
 				858788B126DDF60700B8DF76 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
