@@ -11,6 +11,13 @@ class GameScene: SKScene {
     
     weak var gameVC: GameViewController?
     
+    var player1: SKSpriteNode!
+    var player2: SKSpriteNode!
+    var banana: SKSpriteNode!
+    
+    var currentPlayer = 1
+    
+    
     let BUILDING_LEFT_EDGE: CGFloat = -15
     let BUILDING_RIGHT_EDGE: CGFloat = 1024
     
@@ -33,6 +40,7 @@ class GameScene: SKScene {
         backgroundColor = UIColor.BackgroundColor.backgroundColor
         
         createBuildings()
+        createPlayers()
     }
     
     func createBuildings() {
@@ -50,6 +58,30 @@ class GameScene: SKScene {
             
             buildings.append(building)
         }
+    }
+    
+    func createPlayers() {
+        player1 = createPlayer(number: 1, on: buildings[1])
+        player2 = createPlayer(number: 2, on: buildings[buildings.count - 2])
+    }
+    
+    func createPlayer(number: Int, on building: BuildingNode) -> SKSpriteNode {
+        let player = SKSpriteNode(imageNamed: "player")
+        player.name = "player\(number)"
+        
+        player.physicsBody = SKPhysicsBody(circleOfRadius: player.size.width / 2)
+        player.physicsBody?.categoryBitMask = CollisionTypes.player.rawValue
+        player.physicsBody?.contactTestBitMask = CollisionTypes.banana.rawValue
+        player.physicsBody?.collisionBitMask = CollisionTypes.banana.rawValue
+        player.physicsBody?.isDynamic = false
+        
+        
+        
+        player.position = CGPoint(x: building.position.x, y: building.position.y + ((player.size.height + building.size.height) / 2))
+        
+        addChild(player)
+        
+        return player
     }
     
     func launch(withAngle angle: Int, velocity: Int) {
