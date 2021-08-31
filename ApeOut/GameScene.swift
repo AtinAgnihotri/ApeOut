@@ -41,6 +41,24 @@ class GameScene: SKScene {
         
         createBuildings()
         createPlayers()
+        createRandomGustOfWind()
+    }
+    
+    func createRandomGustOfWind() {
+        /*
+        switch Int.random(in: 0...4) {
+        case 0:
+            physicsWorld.gravity = SKPhysicsWorld.GustsOfWinds.zeroWind
+        case 1:
+            physicsWorld.gravity = SKPhysicsWorld.GustsOfWinds.slightLeftWind
+        case 2:
+            physicsWorld.gravity = SKPhysicsWorld.GustsOfWinds.strongLeftWind
+        case 3:
+            physicsWorld.gravity = SKPhysicsWorld.GustsOfWinds.slightRightWind
+        default:
+            physicsWorld.gravity = SKPhysicsWorld.GustsOfWinds.strongRightWind
+        }
+        */
     }
     
     func createBuildings() {

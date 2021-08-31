@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		850FC27226DE92CE00B810B0 /* GustOfWinds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850FC27126DE92CE00B810B0 /* GustOfWinds.swift */; };
 		858788B126DDF60700B8DF76 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858788B026DDF60700B8DF76 /* AppDelegate.swift */; };
 		858788B326DDF60700B8DF76 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 858788B226DDF60700B8DF76 /* GameScene.sks */; };
 		858788B726DDF60700B8DF76 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858788B626DDF60700B8DF76 /* GameScene.swift */; };
@@ -21,6 +22,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		850FC27126DE92CE00B810B0 /* GustOfWinds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GustOfWinds.swift; sourceTree = "<group>"; };
 		858788AD26DDF60700B8DF76 /* ApeOut.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ApeOut.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		858788B026DDF60700B8DF76 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		858788B226DDF60700B8DF76 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -77,6 +79,7 @@
 				858788BD26DDF60D00B8DF76 /* Assets.xcassets */,
 				858788BF26DDF60D00B8DF76 /* Info.plist */,
 				858788CE26DE07CB00B8DF76 /* ApeOutGameColors.swift */,
+				850FC27126DE92CE00B810B0 /* GustOfWinds.swift */,
 			);
 			path = ApeOut;
 			sourceTree = "<group>";
@@ -163,6 +166,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				858788B726DDF60700B8DF76 /* GameScene.swift in Sources */,
+				850FC27226DE92CE00B810B0 /* GustOfWinds.swift in Sources */,
 				858788CF26DE07CB00B8DF76 /* ApeOutGameColors.swift in Sources */,
 				858788CB26DDFFCF00B8DF76 /* BuildingNode.swift in Sources */,
 				858788B926DDF60700B8DF76 /* GameViewController.swift in Sources */,
