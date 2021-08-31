@@ -11,6 +11,24 @@ import GameplayKit
 
 class GameViewController: UIViewController {
 
+    @IBOutlet var angleSlider: UISlider!
+    @IBOutlet var angleLabel: UILabel!
+    @IBOutlet var velocitySlider: UISlider!
+    @IBOutlet var velocityLabel: UILabel!
+    @IBOutlet var launchButton: UIButton!
+    @IBOutlet var turnLabel: UILabel!
+
+    
+    var angle: Int {
+        Int(angleSlider.value)
+    }
+    
+    var velocity: Int {
+        Int(velocitySlider.value)
+    }
+    
+    var currentScene: GameScene?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -22,6 +40,10 @@ class GameViewController: UIViewController {
                 
                 // Present the scene
                 view.presentScene(scene)
+                
+                currentScene = scene as? GameScene
+                currentScene?.gameVC = self
+                
             }
             
             view.ignoresSiblingOrder = true
@@ -29,6 +51,11 @@ class GameViewController: UIViewController {
             view.showsFPS = true
             view.showsNodeCount = true
         }
+        
+        angleSlider.value = 45
+        velocitySlider.value = 125
+        angleChanged(self)
+        velocityChanged(self)
     }
 
     override var shouldAutorotate: Bool {
@@ -45,5 +72,39 @@ class GameViewController: UIViewController {
 
     override var prefersStatusBarHidden: Bool {
         return true
+    }
+    
+    @IBAction func angleChanged(_ sender: Any) {
+        angleLabel.text = "Angle: \(angle)°"
+    }
+
+    
+    @IBAction func velocityChanged(_ sender: Any) {
+        velocityLabel.text = "Velocity: \(velocity)"
+    }
+
+    @IBAction func launchTapped(_ sender: Any) {
+        showHUDControls(false)
+        currentScene?.launch(withAngle: angle, velocity: velocity)
+    }
+    
+    func showHUDControls(_ showHudCtrls: Bool) {
+        let value = !showHudCtrls
+        
+        angleSlider.isHidden = value
+        angleLabel.isHidden = value
+        velocitySlider.isHidden = value
+        velocityLabel.isHidden = value
+        launchButton.isHidden = value
+    }
+    
+    func advanceTurn(to playerNumber: Int) {
+        if playerNumber == 1 {
+            turnLabel.text = "<<< PLAYER ONE"
+        } else {
+            turnLabel.text = "PLAYER TWO >>>"
+        }
+        
+        showHUDControls(true)
     }
 }

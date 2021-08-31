@@ -9,6 +9,8 @@ import SpriteKit
 
 class GameScene: SKScene {
     
+    weak var gameVC: GameViewController?
+    
     let BUILDING_LEFT_EDGE: CGFloat = -15
     let BUILDING_RIGHT_EDGE: CGFloat = 1024
     
@@ -48,6 +50,10 @@ class GameScene: SKScene {
             
             buildings.append(building)
         }
+    }
+    
+    func launch(withAngle angle: Int, velocity: Int) {
+        
     }
     
     override func update(_ currentTime: TimeInterval) {
