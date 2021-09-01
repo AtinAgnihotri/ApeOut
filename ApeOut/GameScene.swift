@@ -15,7 +15,11 @@ class GameScene: SKScene {
     var player2: SKSpriteNode!
     var banana: SKSpriteNode!
     
-    var currentPlayer = 1
+    var currentPlayer = 1 {
+        didSet {
+            gameVC?.advanceTurn(to: currentPlayer)
+        }
+    }
     
     
     let BUILDING_LEFT_EDGE: CGFloat = -15
@@ -103,10 +107,72 @@ class GameScene: SKScene {
     }
     
     func launch(withAngle angle: Int, velocity: Int) {
+        let speed = Double(velocity) / 10
+        let radAngle = deg2rad(degrees: angle)
         
+        createBanana()
+        setupBananaThrow()
+        throwBanana(at: radAngle, with: speed)
+    }
+    
+    func throwBanana(at angle: Double, with speed: Double) {
+        var dx = speed * cos(angle)
+        let dy = speed * sin(angle)
+        if currentPlayer == 2 {
+            dx *= -1
+        }
+        let impulse = CGVector(dx: dx, dy: dy)
+        banana.physicsBody?.applyImpulse(impulse)
+    }
+    
+    func setupBananaThrow() {
+        let throwAnimation = getThrowAnimation()
+        if currentPlayer == 1 {
+            banana.position = getBananaPosition(for: player1)
+            player1.run(throwAnimation)
+        } else {
+            banana.position = getBananaPosition(for: player2)
+            player2.run(throwAnimation)
+        }
+    }
+    
+    func getBananaPosition(for player: SKSpriteNode) -> CGPoint{
+        let xPos = player.position.x + ((currentPlayer == 1) ? -30 : 30)
+        let yPos = player.position.y + 40
+        return CGPoint(x: xPos, y: yPos)
+    }
+    
+    func getThrowAnimation() -> SKAction {
+        let throwImage = "player\(currentPlayer)Throw"
+        let raiseArm = SKAction.setTexture(SKTexture(imageNamed: throwImage))
+        let pause = SKAction.wait(forDuration: 0.15)
+        let lowerArm = SKAction.setTexture(SKTexture(imageNamed: "player"))
+        return SKAction.sequence([raiseArm, pause, lowerArm])
+    }
+    
+    func createBanana() {
+        if banana != nil {
+            banana.removeFromParent()
+            banana = nil
+        }
+        
+        banana = SKSpriteNode(imageNamed: "banana")
+        banana.name = "banana"
+        
+        banana.physicsBody = SKPhysicsBody(circleOfRadius: banana.size.width / 2)
+        banana.physicsBody?.categoryBitMask = CollisionTypes.banana.rawValue
+        banana.physicsBody?.collisionBitMask = CollisionTypes.building.rawValue | CollisionTypes.player.rawValue
+        banana.physicsBody?.contactTestBitMask = CollisionTypes.building.rawValue | CollisionTypes.player.rawValue
+        banana.physicsBody?.usesPreciseCollisionDetection = true
+        
+        addChild(banana)
     }
     
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
+    }
+    
+    func deg2rad(degrees: Int) -> Double {
+        Double(degrees) * .pi / 180
     }
 }
