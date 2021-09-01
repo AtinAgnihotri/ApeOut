@@ -170,7 +170,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     override func update(_ currentTime: TimeInterval) {
-        // Called before each frame is rendered
+        guard banana != nil else { return }
+        if abs(banana.position.y) > 1000 {
+            banana.removeFromParent()
+            banana = nil
+            changePlayer()
+        }
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
@@ -202,7 +207,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func bananaDidHit(building: SKNode, at location: CGPoint) {
+        guard let building = building as? BuildingNode else  { return }
+        createExplosion(at: location)
         
+        let buildingContactPoint = convert(location, to: building)
+        building.hit(at: buildingContactPoint)
+        
+        banana.name = "" // to prevent phantom collisions
+        banana.removeFromParent()
+        banana = nil
+        
+        changePlayer()
     }
     
     func bananaDidHit(player: SKNode) {
