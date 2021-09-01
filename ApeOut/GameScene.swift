@@ -7,7 +7,7 @@
 
 import SpriteKit
 
-class GameScene: SKScene {
+class GameScene: SKScene, SKPhysicsContactDelegate {
     
     weak var gameVC: GameViewController?
     
@@ -42,6 +42,7 @@ class GameScene: SKScene {
     func setupEnvironment() {
         // Setup background
         backgroundColor = UIColor.BackgroundColor.backgroundColor
+        physicsWorld.contactDelegate = self
         
         createBuildings()
         createPlayers()
@@ -172,7 +173,84 @@ class GameScene: SKScene {
         // Called before each frame is rendered
     }
     
+    func didBegin(_ contact: SKPhysicsContact) {
+        let firstBody: SKPhysicsBody
+        let secondBody: SKPhysicsBody
+        
+        if contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask {
+            firstBody = contact.bodyA
+            secondBody = contact.bodyB
+        } else {
+            firstBody = contact.bodyB
+            secondBody = contact.bodyA
+        }
+        
+        guard let firstNode = firstBody.node else { return }
+        guard let secondNode = secondBody.node else { return }
+        
+        if firstNode.name == "banana" && secondNode.name == "building" {
+            bananaDidHit(building: secondNode, at: contact.contactPoint)
+        }
+        
+        if firstNode.name == "banana" && secondNode.name == "player1" {
+            bananaDidHit(player: player1)
+        }
+        
+        if firstNode.name == "banana" && secondNode.name == "player2" {
+            bananaDidHit(player: player2)
+        }
+    }
+    
+    func bananaDidHit(building: SKNode, at location: CGPoint) {
+        
+    }
+    
+    func bananaDidHit(player: SKNode) {
+        createExplosion(for: player)
+        
+        banana.removeFromParent()
+        player.removeFromParent()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) { // No reference cycle here so no need of weak self
+            self.changePlayer()
+            self.instantiateNewScene()
+        }
+    }
+    
+    func createExplosion(for player: SKNode) {
+        if let explosion = SKEmitterNode(fileNamed: "hitPlayer") {
+            explosion.position = player.position
+            addChild(explosion)
+        }
+    }
+    
+    func createExplosion(at location: CGPoint) {
+        if let explosion = SKEmitterNode(fileNamed: "hitBuilding") {
+            explosion.position = location
+            addChild(explosion)
+        }
+    }
+    
     func deg2rad(degrees: Int) -> Double {
         Double(degrees) * .pi / 180
+    }
+    
+    func changePlayer() {
+        if currentPlayer == 1 {
+            currentPlayer = 2
+        } else {
+            currentPlayer = 1
+        }
+    }
+    
+    func instantiateNewScene() {
+        let newScene = GameScene(size: self.size)
+        newScene.gameVC = gameVC
+        gameVC?.currentScene = newScene
+        newScene.currentPlayer = currentPlayer
+        
+        let transition = SKTransition.doorway(withDuration: 1.5)
+        // MARK: Check later
+        view?.presentScene(newScene, transition: transition)
     }
 }
