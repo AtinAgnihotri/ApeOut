@@ -20,6 +20,29 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             gameVC?.advanceTurn(to: currentPlayer)
         }
     }
+    var player1Score = 0 {
+        didSet {
+            gameVC?.player1Score = player1Score
+            if player1Score >= 3 {
+                isGameOver = true
+            }
+        }
+    }
+    var player2Score = 0 {
+        didSet {
+            gameVC?.player2Score = player2Score
+            if player2Score >= 3 {
+                isGameOver = true
+            }
+        }
+    }
+    var isGameOver = false {
+        didSet {
+            if isGameOver {
+                gameOver()
+            }
+        }
+    }
     
     
     let BUILDING_LEFT_EDGE: CGFloat = -15
@@ -50,20 +73,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func createRandomGustOfWind() {
-        /*
         switch Int.random(in: 0...4) {
         case 0:
             physicsWorld.gravity = SKPhysicsWorld.GustsOfWinds.zeroWind
+            gameVC?.windLabel.text = "No Wind"
         case 1:
             physicsWorld.gravity = SKPhysicsWorld.GustsOfWinds.slightLeftWind
+            gameVC?.windLabel.text = "Slight Left Wind"
         case 2:
             physicsWorld.gravity = SKPhysicsWorld.GustsOfWinds.strongLeftWind
+            gameVC?.windLabel.text = "Strong Left Wind"
         case 3:
             physicsWorld.gravity = SKPhysicsWorld.GustsOfWinds.slightRightWind
+            gameVC?.windLabel.text = "Slight Right Wind"
         default:
             physicsWorld.gravity = SKPhysicsWorld.GustsOfWinds.strongRightWind
+            gameVC?.windLabel.text = "Strong Right Wind"
         }
-        */
     }
     
     func createBuildings() {
@@ -199,10 +225,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         if firstNode.name == "banana" && secondNode.name == "player1" {
             bananaDidHit(player: player1)
+            player2Score += 1
         }
         
         if firstNode.name == "banana" && secondNode.name == "player2" {
             bananaDidHit(player: player2)
+            player1Score += 1
         }
     }
     
@@ -226,9 +254,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         banana.removeFromParent()
         player.removeFromParent()
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) { // No reference cycle here so no need of weak self
-            self.changePlayer()
-            self.instantiateNewScene()
+        if !isGameOver {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) { // No reference cycle here so no need of weak self
+                self.changePlayer()
+                self.instantiateNewScene()
+            }
         }
     }
     
@@ -263,9 +293,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         newScene.gameVC = gameVC
         gameVC?.currentScene = newScene
         newScene.currentPlayer = currentPlayer
+        newScene.player1Score = player1Score
+        newScene.player2Score = player2Score
         
         let transition = SKTransition.doorway(withDuration: 1.5)
         // MARK: Check later
         view?.presentScene(newScene, transition: transition)
+    }
+    
+    func gameOver() {
+        let winner = (player1Score > player2Score) ? 1 : 2
+        gameVC?.showHUDControls(false)
+        gameVC?.turnLabel.text = "GAME OVER: PLAYER \(winner) WINS"
     }
 }

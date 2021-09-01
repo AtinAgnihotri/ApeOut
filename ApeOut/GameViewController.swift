@@ -17,6 +17,10 @@ class GameViewController: UIViewController {
     @IBOutlet var velocityLabel: UILabel!
     @IBOutlet var launchButton: UIButton!
     @IBOutlet var turnLabel: UILabel!
+    @IBOutlet var windLabel: UILabel!
+    
+    var player1Score = 0
+    var player2Score = 0
 
     
     var angle: Int {
@@ -100,9 +104,9 @@ class GameViewController: UIViewController {
     
     func advanceTurn(to playerNumber: Int) {
         if playerNumber == 1 {
-            turnLabel.text = "<<< PLAYER ONE"
+            turnLabel.text = "<<< PLAYER ONE : \(player1Score) points"
         } else {
-            turnLabel.text = "PLAYER TWO >>>"
+            turnLabel.text = "\(player2Score) points : PLAYER TWO >>>"
         }
         
         showHUDControls(true)
