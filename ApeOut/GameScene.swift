@@ -143,6 +143,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func throwBanana(at angle: Double, with speed: Double) {
+        banana.physicsBody?.angularVelocity = -20
         var dx = speed * cos(angle)
         let dy = speed * sin(angle)
         if currentPlayer == 2 {
